@@ -24,9 +24,9 @@
     var myChart = echarts.init(document.getElementById('main'));
 
     // 指定图表的配置项和数据
-    var option = {
+    option = {
         title: {
-            text: 'Java',
+            text: 'JavaScript',
             left: 'center'
         },
         tooltip: {
@@ -35,16 +35,16 @@
         },
         series: [
             {
-                name: 'Java',
+                name: 'JavaScript',
                 type: 'pie',
                 radius: '55%',
-                center: ['30%', '60%'],
+                center: ['50%', '60%'],
                 data: [
-                    {value: 16, name: 'Python'},
-                    {value: 15, name: 'JSP'},
-                    {value: 23, name: 'SpringBOOT'},
-                    {value: 13, name: 'Android'},
-                    {value: 31, name: 'mysql'}
+                    {value: 25, name: 'HTML/CSS'},
+                    {value: 15, name: 'jQuery'},
+                    {value: 20, name: 'Bootstrap'},
+                    {value: 13, name: 'Node.js'},
+                    {value: 40, name: 'Vue.js'}
                 ],
                 emphasis: {
                     itemStyle: {
@@ -56,6 +56,7 @@
             }
         ]
     };
+
 
 
     // 使用刚指定的配置项和数据显示图表。
