@@ -3,7 +3,7 @@
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>test管理</h5>
+                <h5>test</h5>
             </div>
         </div>
     </div>
@@ -13,56 +13,131 @@
     <meta charset="utf-8">
     <title>ECharts</title>
     <!-- 引入 echarts.js -->
-    <script src="${ctxPath}/static/modular/system/test/test.js"></script>
+    <script src="${ctxPath}/static/modular/system/test/echarts.all.js"></script>
     <script src="${ctxPath}/static/modular/system/test/echarts.js"></script>
 </head>
 <body>
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="main" style="width: 1200px;height:800px;"></div>
 <script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
+    var nodes=[
+        {category:0, name: '乔布斯', value : 10, symbolSize: 100},
+        {category:1, name: '丽萨-乔布斯',value : 2,symbolSize:20},
+        {category:1, name: '保罗-乔布斯',value : 3,symbolSize:30},
+        {category:1, name: '克拉拉-乔布斯',value : 3,symbolSize:30},
+        {category:1, name: '劳伦-鲍威尔',value : 7,symbolSize:70},
+        {category:2, name: '史蒂夫-沃兹尼艾克',value : 5,symbolSize:50},
+        {category:2, name: '奥巴马',value : 8,symbolSize:80},
+        {category:2, name: '比尔-盖茨',value : 9,symbolSize:90},
+        {category:2, name: '乔纳森-艾夫',value : 4,symbolSize:40},
+        {category:2, name: '蒂姆-库克',value : 4,symbolSize:40},
+        {category:2, name: '龙-韦恩',value : 1,symbolSize:10},
+        ]
 
-    // 指定图表的配置项和数据
+    var links = [
+        {source : '丽萨-乔布斯', target : '乔布斯',lineStyle:{width:1}},
+        {source : '保罗-乔布斯', target : '乔布斯', lineStyle:{width:2}},
+        {source : '克拉拉-乔布斯', target : '乔布斯', lineStyle:{width:1}},
+        {source : '劳伦-鲍威尔', target : '乔布斯', lineStyle:{width:2}},
+        {source : '史蒂夫-沃兹尼艾克', target : '乔布斯', lineStyle:{width:3}},
+        {source : '奥巴马', target : '乔布斯', lineStyle:{width:1}},
+        {source : '比尔-盖茨', target : '乔布斯', lineStyle:{width:6}},
+        {source : '乔纳森-艾夫', target : '乔布斯', lineStyle:{width:1}},
+        {source : '蒂姆-库克', target : '乔布斯', lineStyle:{width:1}},
+        {source : '龙-韦恩', target : '乔布斯', lineStyle:{width:1}},
+        {source : '克拉拉-乔布斯', target : '保罗-乔布斯', lineStyle:{width:1}},
+        {source : '奥巴马', target : '保罗-乔布斯', lineStyle:{width:1}},
+        {source : '奥巴马', target : '克拉拉-乔布斯', lineStyle:{width:1}},
+        {source : '奥巴马', target : '劳伦-鲍威尔', lineStyle:{width:1}},
+        {source : '奥巴马', target : '史蒂夫-沃兹尼艾克', lineStyle:{width:1}},
+        {source : '比尔-盖茨', target : '奥巴马', lineStyle:{width:6}},
+        {source : '比尔-盖茨', target : '克拉拉-乔布斯', lineStyle:{width:1}},
+        {source : '蒂姆-库克', target : '奥巴马', lineStyle:{width:1}}
+    ]
+
+
+    var categoryArray=[{name:"核心人物"},{name:"家人"},{name:"朋友"}]
+    var graph = {"categories": categoryArray, "nodes": nodes, "links": links}
+    var jsondata={"categories":categoryArray,"nodes":nodes,"links":links}
+    // 基于准备好的容器(这里的容器是id为chart1的div)，初始化echarts实例
+
+    jsondata.nodes.forEach(function (node) {
+        //node.itemStyle = null;//
+        //node.symbolSize = node.size;//强制指定节点的大小
+        // Use random x, y
+        node.x = node.y = null;
+        node.draggable = true;
+    });
+
+    var title=jsondata['title']
+    var nodess=jsondata['nodes']
+    var linkss=jsondata['links']
+    var categories=jsondata['categories']
+
+    console.log(nodess)
+    var myChart = echarts.init(document.getElementById('main'));
     var option = {
-        title: {
-            text: 'Java',
-            left: 'center'
+        title : {
+            text:"test"
         },
-        tooltip: {
+        tooltip : {
             trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
+            formatter: '{a} : {b}'
+            //formatter: function(params){//触发之后返回的参数，这个函数是关键
+            //if (params.data.category !=undefined) //如果触发节点
+            //   window.open("http://www.baidu.com")
+            //}
         },
-        series: [
+        legend: {
+            data: categories.map(function (a) {//显示策略
+                return a.name;
+            })
+        },
+        series : [
             {
-                name: 'Java',
-                type: 'pie',
-                radius: '55%',
-                center: ['50%', '60%'],
-                data: [
-                    {value: 15, name: 'JSP'},
-                    {value: 23, name: 'SpringBOOT'},
-                    {value: 16, name: 'Python'},
-                    {value: 13, name: 'Android'},
-                    {value: 31, name: 'mysql'}
-                ],
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                type:'graph',
+                name : title,
+                layout:'circular',
+                symbolSize: 80,
+                edgeSymbol: ['circle', 'arrow'],
+                edgeSymbolSize: [4, 10],
+                edgeLabel: {
+                    normal: {
+                        textStyle: {
+                            fontSize: 20
+                        }
                     }
-                }
+                },
+                itemStyle: {
+                    borderColor: '#fff',
+                    borderWidth: 1,
+                    shadowBlur: 10,
+                    shadowColor: 'rgba(0, 0, 0, 0.3)'
+                },
+                lineStyle: {
+                    width: 3,
+                    color: 'source',
+                    curveness: 0.3
+                },
+                label: {
+                    show:true,
+                    position: 'right',
+                    formatter: '{b}',
+                    color:'auto',
+                    fontStyle:'italic'
+                },
+                focusNodeAdjacency: true,
+                draggable: true,
+                categories : categories,
+                roam: 'true',
+                data: nodess,
+                links :linkss,
+
             }
         ]
     };
-
-
-    // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
 </script>
 </body>
 </html>
-<script src="${ctxPath}/static/modular/system/test/test.js"></script>
-
 @}
