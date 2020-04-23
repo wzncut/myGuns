@@ -1,5 +1,10 @@
 package cn.stylefeng.guns.modular.system.controller;
 
+import cn.stylefeng.guns.modular.system.Bo.LineStyle;
+import cn.stylefeng.guns.modular.system.Bo.LinksData;
+import cn.stylefeng.guns.modular.system.Bo.VisualData;
+import cn.stylefeng.guns.modular.system.model.Nodes;
+import cn.stylefeng.guns.modular.system.service.INodesService;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cn.stylefeng.guns.modular.system.model.Visual;
 import cn.stylefeng.guns.modular.system.service.IVisualService;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * 控制器
  *
@@ -21,12 +30,26 @@ import cn.stylefeng.guns.modular.system.service.IVisualService;
 @Controller
 @RequestMapping("/visual")
 public class VisualController extends BaseController {
-
     private String PREFIX = "/system/visual/";
 
     @Autowired
-    private IVisualService visualService;
+    private INodesService nodesService;
 
+    @Autowired
+    private IVisualService visualService;
+    @RequestMapping("supConfVisual")
+    @ResponseBody
+    public List<List<Double>> supConfVisual(){
+        List<Visual> visualsRes=visualService.selectList(null);
+        List<List<Double>> data = new LinkedList<>();
+        for (Visual visualIn:visualsRes){
+            List<Double> inerData=new LinkedList<>();
+            inerData.add(Double.parseDouble(visualIn.getSup()));
+            inerData.add(Double.parseDouble(visualIn.getConf()));
+            data.add(inerData);
+        }
+        return data;
+    }
     /**
      * 跳转到首页
      */
@@ -34,6 +57,7 @@ public class VisualController extends BaseController {
     public String index() {
         return PREFIX + "visual.html";
     }
+
 
     /**
      * 跳转到添加

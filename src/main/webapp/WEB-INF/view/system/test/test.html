@@ -13,8 +13,8 @@
     <meta charset="utf-8">
     <title>ECharts</title>
     <!-- 引入 echarts.js -->
-    <script src="${ctxPath}/static/modular/system/test/echarts.all.js"></script>
-    <script src="${ctxPath}/static/modular/system/test/echarts.js"></script>
+    <script type="text/javascript" src="${ctxPath}/static/modular/system/test/echarts-en.min.js"></script>
+    <script type="text/javascript" src="${ctxPath}/static/modular/system/test/echarts.js"></script>
 </head>
 <body>
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
@@ -47,7 +47,8 @@
             var linkss=jsondata['links']
             var categories=jsondata['categories']
 
-            console.log(nodess)
+            console.log(nodess);
+            console.log(linkss);
             var myChart = echarts.init(document.getElementById('main'));
             var option = {
                 title : {
