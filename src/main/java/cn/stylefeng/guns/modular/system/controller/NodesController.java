@@ -59,8 +59,10 @@ public class NodesController extends BaseController {
             LinksData links=new LinksData();
             LineStyle lineStyle =new LineStyle();
             lineStyle.setWidth(Integer.parseInt(visualIn.getSup()));
+//            lineStyle.setWidth(Integer.parseInt(visualIn.getConf()));
             links.setSource(visualIn.getSources());
             links.setTarget(visualIn.getTarget());
+            links.setValue(Double.parseDouble(visualIn.getConf()));
             links.setLineStyle(lineStyle);
             linksData.add(links);
         }

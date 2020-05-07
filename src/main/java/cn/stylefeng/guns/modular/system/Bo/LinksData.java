@@ -6,5 +6,6 @@ import lombok.Data;
 public class LinksData {
     private String source;
     private String target;
+    private double value;
     private LineStyle lineStyle;
 }

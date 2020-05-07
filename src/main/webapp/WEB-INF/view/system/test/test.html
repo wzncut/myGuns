@@ -28,7 +28,6 @@
         success:function (result) {
             nodes=result.nodes;
             links=result.links;
-            console.log(nodes)
 
             var categoryArray=[{name:"0"},{name:"1"},{name:"2"},{name:"3"},{name:"4"},{name:"5"},{name:"6"},{name:"7"}]
             var jsondata={"categories":categoryArray,"nodes":nodes,"links":links}
@@ -76,6 +75,8 @@
                         edgeSymbol: ['circle', 'arrow'],
                         edgeSymbolSize: [4, 10],
                         edgeLabel: {
+                            show:true,
+                            formatter:'{c}',
                             normal: {
                                 textStyle: {
                                     fontSize: 20
